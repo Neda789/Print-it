@@ -19,34 +19,32 @@
 let banner_img = document.querySelector('.banner-img');
 let taglines = document.getElementById('taglines');
 let dots = document.querySelectorAll('.dot');
+let arrow_left = document.querySelector('.arrow_left');
+let arrow_right = document.querySelector('.arrow_right');
 
 let i = 0;
 
-function arrow_left() {
-	if (i <= 0) i = slides.length;
-	i--;
-	return setSlide();
-}
+arrow_left.addEventListener('click', function() {
+	var prevIndex = (i - 1 + slides.length) % slides.length;
+	changeSlide(prevIndex);
+});
 
-function arrow_right() {
-	if (i >= slides.length - 1) i = -1;
-	i++;
-	return setSlide();
-}
+arrow_right.addEventListener('click', function() {
+	var nextIndex = (i + 1) % slides.length;
+	changeSlide(nextIndex);
+});
 
 function setSlide() {
 	banner_img.setAttribute('src', './assets/images/slideshow/' + slides[i].image);
 	taglines.innerHTML = slides[i].tagLine;
 
-	// Déselectionner tous les points
 	dots.forEach(dot => dot.classList.remove('dot_selected'));
-	// Sélectionner le point correspondant
 	dots[i].classList.add('dot_selected');
 }
-	function changeSlide(index) {
-		i = index;
-		setSlide();
+
+function changeSlide(index) {
+	i = index;
+	setSlide();
 }
 
-// Initialiser le slider
 setSlide();
